@@ -1,3 +1,8 @@
+/**
+ * enum class for item IDs
+ * by Joshua Brody 5/2024
+ */
+
 #ifndef ITEMENUMCLASS_H
 #define ITEMENUMCLASS_H
 

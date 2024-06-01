@@ -21,8 +21,6 @@ public:
 
 private:
     // Key: item name, Value: itemSlot(stores png and name). Is used to tell invetoryWidget to display these ItemSlots
-
-    std::vector<ItemsClass*> itemStorage;
     QMap<ItemEnumClass, ItemsClass*> itemMap;
 
     bool bariumTargeted;
@@ -38,9 +36,23 @@ private:
 
 
 public slots:
+    ///
+    /// \brief addThisItem add the item to the inventory and update display
+    /// \param daItem
+    ///
     void addThisItem(ItemsClass *daItem);
+
+    ///
+    /// \brief removeThisItem remove the item from the inventory and update display
+    /// \param daItem
+    ///
     void removeThisItem(ItemsClass *daItem);
 
+    ///
+    /// \brief oreTargetBool  toggles the targeted item so we know what to add to inventory
+    /// \param itemID
+    /// \param isTargeted   the state to set the items bool
+    ///
     void oreTargetBool(ItemEnumClass itemID, bool isTargeted);
 
     /**
@@ -55,10 +67,28 @@ public slots:
 
 
 signals:
+    ///
+    /// \brief updateInventoryDisplay  tell inventoryWidget to display this item
+    /// \param ItemsClass
+    ///
     void updateInventoryDisplay(ItemsClass* ItemsClass);
+
+    ///
+    /// \brief replaceInventoryItem  tell inventoryWidget to replace item on display with this one
+    /// \param itemToReplace
+    ///
     void replaceInventoryItem(ItemsClass* itemToReplace);
 
+    ///
+    /// \brief addMined  add item to inventory with threading
+    /// \param daItem
+    ///
     void addMined(ItemsClass *daItem);
+
+    ///
+    /// \brief removeDumped  remove item from inventory with threading
+    /// \param daItem
+    ///
     void removeDumped(ItemsClass *daItem);
 
 
