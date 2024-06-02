@@ -20,13 +20,6 @@ InventoryWidget::~InventoryWidget()
 }
 
 // Slot
-void InventoryWidget::updateWithItem(ItemsClass* item){
-
-    // Add item to the list. Will return the item with updated quantity.
-    ItemsClass* updatedItem = updateItemInList(item); // If not in list, add it
-    int order = findIndexInList(updatedItem); // if item not in list, return 0!
-    displayItemAtLocation(updatedItem, order);
-}
 
 void InventoryWidget::setThisItemInView(ItemsClass* item){
     replaceItemInList(item);
@@ -86,20 +79,14 @@ int InventoryWidget::findIndexInList(ItemsClass* item){
 
 
 
-ItemsClass* InventoryWidget::updateItemInList(ItemsClass* itemWantToAdd){
-    if(itemsMap.contains(itemWantToAdd->giveID())){
-        itemsMap.find(itemWantToAdd->giveID()).value()->addItemQuantity(itemWantToAdd);
-        return itemsMap.value(itemWantToAdd->giveID());
-
-    } else {
-        itemsMap.insert(itemWantToAdd->giveID(), itemWantToAdd);
-        return itemWantToAdd;
-    }
-}
 
 void InventoryWidget::replaceItemInList(ItemsClass* itemToReplace){
+    // Check if the itemToAdd is in the map already
     if(itemsMap.contains(itemToReplace->giveID())){
-        itemsMap.remove(itemToReplace->giveID());
+
+        itemsMap.insert(itemToReplace->giveID(), itemToReplace);
+    } else {
+
         itemsMap.insert(itemToReplace->giveID(), itemToReplace);
     }
 }

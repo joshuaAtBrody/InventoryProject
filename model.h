@@ -43,12 +43,6 @@ public slots:
     void addThisItem(ItemsClass *daItem);
 
     ///
-    /// \brief removeThisItem remove the item from the inventory and update display
-    /// \param daItem
-    ///
-    void removeThisItem(ItemsClass *daItem);
-
-    ///
     /// \brief oreTargetBool  toggles the targeted item so we know what to add to inventory
     /// \param itemID
     /// \param isTargeted   the state to set the items bool

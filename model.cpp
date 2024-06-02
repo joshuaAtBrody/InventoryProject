@@ -20,6 +20,7 @@ void Model::addThisItem(ItemsClass* daItem){
     if(itemMap.contains(daItem->giveID())){
         itemMap.find(daItem->giveID()).value()->addItemQuantity(daItem);
 
+
         emit updateInventoryDisplay(itemMap.value(daItem->giveID()));
 
     } else {
@@ -29,14 +30,6 @@ void Model::addThisItem(ItemsClass* daItem){
 
 }
 
-
-
-void Model::removeThisItem(ItemsClass *daItem){
-    itemMap.remove(daItem->giveID());
-    itemMap.insert(daItem->giveID(), daItem);
-
-    emit replaceInventoryItem(daItem);
-}
 
 
 
@@ -88,46 +81,38 @@ void Model::dumpOre(){
     // the negative numbers are for calculating the quantity
     if(bariumTargeted){
         ItemsClass* itemToAdd = new ItemsClass(ItemEnumClass::BARIUMORE, -2);
-
-        // Add the negative quantity to the item in the inventory if it is in the inventory.
-        itemMap.value(ItemEnumClass::BARIUMORE)->addItemQuantity(itemToAdd);
-
-        // replace the item in the display with the new quantity amount.
-        emit replaceInventoryItem(itemMap.value(ItemEnumClass::BARIUMORE));
-        //emit removeDumped(itemMap.value(ItemEnumClass::BARIUMORE));
+        emit addMined(itemToAdd);
     }
     if(ironTargeted){
         ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::IRONORE, -4);
-        itemMap.value(ItemEnumClass::IRONORE)->addItemQuantity(itemToAdd);
-        emit removeDumped(itemMap.value(ItemEnumClass::IRONORE));
+        emit addMined(itemToAdd);
     }
     if(goldTargeted){
         ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::GOLDORE, -2);
-        itemMap.value(ItemEnumClass::GOLDORE)->addItemQuantity(itemToAdd);
-        emit removeDumped(itemMap.value(ItemEnumClass::GOLDORE));
+        emit addMined(itemToAdd);
     }
     if(ethyleneTargeted){
-        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::ETHYLENEGAS, 1);
+        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::ETHYLENEGAS, -1);
         emit addMined(itemToAdd);
     }
     if(peridotTargeted){
-        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::PERIDOTGEM, 1);
+        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::PERIDOTGEM, -1);
         emit addMined(itemToAdd);
     }
     if(hydrogenTargeted){
-        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::HYDROGENGAS, 2);
+        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::HYDROGENGAS, -2);
         emit addMined(itemToAdd);
     }
     if(sulphurTargeted){
-        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::SULPHURORE, 3);
+        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::SULPHURORE, -3);
         emit addMined(itemToAdd);
     }
     if(methaneTargeted){
-        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::METHANEGAS, 1);
+        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::METHANEGAS, -1);
         emit addMined(itemToAdd);
     }
     if(bauxiteTargeted){
-        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::BAUXITEORE, 3);
+        ItemsClass *itemToAdd = new ItemsClass(ItemEnumClass::BAUXITEORE, -3);
         emit addMined(itemToAdd);
     }
 }

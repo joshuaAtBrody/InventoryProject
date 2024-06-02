@@ -50,13 +50,6 @@ private:
     ///
     int findIndexInList(ItemsClass* item);
 
-    ///
-    /// \brief updateItemInList add the quantity of the item to the same item in the list.
-    ///        Or add the item to the list if not already there
-    /// \param item the item we want to add into the inventory
-    /// \return the updated item that was in the inventory, or the same item if not already in inventory.
-    ///
-    ItemsClass* updateItemInList(ItemsClass* item);
 
     ///
     /// \brief replaceItemInList  replace the same item in the list with this item
@@ -67,11 +60,6 @@ private:
 
 
 public slots:
-    ///
-    /// \brief updateWithItem add the given item into the list
-    /// \param item
-    ///
-    void updateWithItem(ItemsClass* item);
 
     ///
     /// \brief setThisItemInView replace the current item type in the inventory with this item.

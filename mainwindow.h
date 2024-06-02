@@ -25,11 +25,6 @@ public:
     ~MainWindow();
 
 public slots:
-    ///
-    /// \brief updateInventory tell display to add this item quantity
-    /// \param itemToRefresh
-    ///
-    void updateInventory(ItemsClass* itemToRefresh);
 
     ///
     /// \brief replaceInventoryItem  tell display to replace the same item with this one.

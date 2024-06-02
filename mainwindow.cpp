@@ -24,14 +24,13 @@ void MainWindow::setUpConnections(){
     connect(this, &MainWindow::addItemToInventory, model, &Model::addThisItem);
     connect(this, &MainWindow::mined, model, &Model::mineOre);
     connect(this, &MainWindow::dumped, model, &Model::dumpOre);
-
     connect(this, &MainWindow::oreToggled, model, &Model::oreTargetBool);
 
-    connect(model, &Model::updateInventoryDisplay, this, &MainWindow::updateInventory);
-    connect(model, &Model::replaceInventoryItem, this, &MainWindow::replaceInventoryItem);
+
+    connect(model, &Model::updateInventoryDisplay, this, &MainWindow::replaceInventoryItem);
+
 
     connect(model, &Model::addMined, model, &Model::addThisItem);
-    connect(model, &Model::removeDumped, model, &Model::removeThisItem);
 
 
 
@@ -41,9 +40,6 @@ void MainWindow::setUpConnections(){
 
 // Slots:
 
-void MainWindow::updateInventory(ItemsClass* itemToRefresh){
-    ui->invWig->updateWithItem(itemToRefresh);
-}
 
 void MainWindow::replaceInventoryItem(ItemsClass* itemToReplace){
     ui->invWig->setThisItemInView(itemToReplace);
