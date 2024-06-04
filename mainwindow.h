@@ -32,6 +32,8 @@ public slots:
     ///
     void replaceInventoryItem(ItemsClass* itemToReplace);
 
+    void updateInventoryFullness(float percentage);
+
 
 private slots:
 

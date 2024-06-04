@@ -11,7 +11,7 @@
 #include <QWidget>
 #include <QtWidgets>
 #include "itemsClass.h"
-#include "itemslot.h"
+
 
 namespace Ui {
 class InventoryWidget;
@@ -28,6 +28,7 @@ public:
 private:
     Ui::InventoryWidget *ui;
     QMap<ItemEnumClass, ItemsClass*> itemsMap;
+    std::vector<ItemEnumClass> itemsOrder;
     int inventoryCount;
 
 
@@ -48,7 +49,7 @@ private:
     /// \param item the item we are searching for.
     /// \return an int index representing the order the item is in.
     ///
-    int findIndexInList(ItemsClass* item);
+    int findIndexInList(ItemEnumClass item);
 
 
     ///
@@ -57,6 +58,8 @@ private:
     /// \param item the new item in the inventory
     ///
     void replaceItemInList(ItemsClass* item);
+
+    void clearLayout(QLayout* layout);
 
 
 public slots:
@@ -67,6 +70,8 @@ public slots:
     /// \param item the item to replace or add (if the item is not inventory)
     ///
     void setThisItemInView(ItemsClass* item);
+
+    void updateInventoryFullness(float percentage);
 
 
 signals:

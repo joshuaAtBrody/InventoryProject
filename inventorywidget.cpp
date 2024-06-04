@@ -8,14 +8,13 @@ InventoryWidget::InventoryWidget(QWidget *parent)
     , ui(new Ui::InventoryWidget)
 {
     ui->setupUi(this);
-
-    // mainLayout = new QVBoxLayout(this);
-    // ui->scrollAreaWidgetContents->setLayout(mainLayout);
 }
 
 InventoryWidget::~InventoryWidget()
 {
     delete ui;
+    qDeleteAll(itemsMap);
+
     //delete mainLayout;
 }
 
@@ -23,10 +22,14 @@ InventoryWidget::~InventoryWidget()
 
 void InventoryWidget::setThisItemInView(ItemsClass* item){
     replaceItemInList(item);
-
-    int order = findIndexInList(item);
-    displayItemAtLocation(item, order);
 }
+
+
+
+void InventoryWidget::updateInventoryFullness(float percentage){
+    ui->InventoryFullnessBar->setValue(percentage);
+}
+
 
 
 // Private:
@@ -58,19 +61,39 @@ void InventoryWidget::displayItemAtLocation(ItemsClass* item, int order){
 }
 
 
-// delete all items
+// reorder all items in list
 void InventoryWidget::resetDisplay(){
+    clearLayout(ui->gridLayout);
 
+    for (auto key : itemsMap.keys()) {
+        int order = findIndexInList(key);
+        displayItemAtLocation(itemsMap.value(key), order);
+    }
+}
+
+
+void InventoryWidget::clearLayout(QLayout* layout) {
+    QLayoutItem* item;
+    while ((item = layout->takeAt(0)) != nullptr) {
+        if (item->widget()) {
+            delete item->widget();  // Delete the widget
+        } else if (item->layout()) {
+            clearLayout(item->layout());  // Recursively clear nested layouts
+            delete item->layout();  // Delete the nested layout
+        }
+        delete item;  // Delete the layout item
+    }
 }
 
 
 
-int InventoryWidget::findIndexInList(ItemsClass* item){
-    auto it = std::find(itemsMap.begin(), itemsMap.end(), item);
 
-    if(it != itemsMap.end()){
+int InventoryWidget::findIndexInList(ItemEnumClass item){
+    auto it = std::find(itemsOrder.begin(), itemsOrder.end(), item);
+
+    if(it != itemsOrder.end()){
         // return the index the item was found at.
-        return std::distance(itemsMap.begin(), it);
+        return std::distance(itemsOrder.begin(), it);
     }
 
 
@@ -84,10 +107,37 @@ void InventoryWidget::replaceItemInList(ItemsClass* itemToReplace){
     // Check if the itemToAdd is in the map already
     if(itemsMap.contains(itemToReplace->giveID())){
 
-        itemsMap.insert(itemToReplace->giveID(), itemToReplace);
-    } else {
 
+
+        // The item reached 0, time to get rid of it!
+        if(itemsMap.value(itemToReplace->giveID())->giveQuantity() <= 0){
+            itemsMap.remove(itemToReplace->giveID());
+
+            // Use std::remove to move the elements to be removed to the end
+            auto newEnd = std::remove(itemsOrder.begin(), itemsOrder.end(), itemToReplace->giveID());
+
+
+
+            // Erase the elements from the new end to the actual end
+            itemsOrder.erase(newEnd, itemsOrder.end());
+
+            resetDisplay();
+
+
+
+        } else {
+            itemsMap.insert(itemToReplace->giveID(), itemToReplace);
+            int order = findIndexInList(itemToReplace->giveID());
+            displayItemAtLocation(itemToReplace, order);
+        }
+
+    } else {
+        // Not Found: so just add the item.
         itemsMap.insert(itemToReplace->giveID(), itemToReplace);
+        itemsOrder.push_back(itemToReplace->giveID());
+
+        int order = findIndexInList(itemToReplace->giveID());
+        displayItemAtLocation(itemToReplace, order);
     }
 }
 

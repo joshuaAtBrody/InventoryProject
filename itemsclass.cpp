@@ -12,31 +12,31 @@ ItemsClass::ItemsClass() {
 ItemsClass::ItemsClass(ItemEnumClass itemID, int quantity) : itemID(itemID), quantity(quantity){
     switch(itemID){
         case ItemEnumClass::BARIUMORE:
-            setStats("Barium Ore", "", "", 1, 1, 0);
+            setStats("Barium Ore", "", "", 2.5, .7, 0);
             break;
         case ItemEnumClass::BAUXITEORE:
-            setStats("Bauxite Ore", "", "", 1, 1, 0);
+            setStats("Bauxite Ore", "", "", 2.5, .65, 0);
             break;
         case ItemEnumClass::ETHYLENEGAS:
-            setStats("Ethylene Gas", "", "", .1, .1, 0);
+            setStats("Ethylene Gas", "", "", .1, .025, 0);
             break;
         case ItemEnumClass::GOLDORE:
-            setStats("Gold Ore", "", "", 1.2, 1, 0);
+            setStats("Gold Ore", "", "", 5, 1, 0);
             break;
         case ItemEnumClass::HYDROGENGAS:
-            setStats("Hydrogen Gas", "", "", .15, .1, 0);
+            setStats("Hydrogen Gas", "", "", 1, .1, 0);
             break;
         case ItemEnumClass::IRONORE:
-            setStats("Iron Ore", "", "", 1.2, 1, 0);
+            setStats("Iron Ore", "", "", 4.75, .75, 0);
             break;
         case ItemEnumClass::METHANEGAS:
-            setStats("Methane Gas", "", "", .2, .1, 0);
+            setStats("Methane Gas", "", "", .2, .05, 0);
             break;
         case ItemEnumClass::PERIDOTGEM:
-            setStats("Peridot Gem", "", "", 1, .8, 0);
+            setStats("Peridot Gem", "", "", 2.25, .2, 0);
             break;
         case ItemEnumClass::SULPHURORE:
-            setStats("Sulphur Ore", "", "", 1, 1, 0);
+            setStats("Sulphur Ore", "", "", .75, .075, 0);
             break;
     }
 }
@@ -66,6 +66,10 @@ QString ItemsClass::giveDesc(){
 
 int ItemsClass::giveQuantity(){
     return quantity;
+}
+
+float ItemsClass::giveVolumn(){
+    return volumn;
 }
 
 

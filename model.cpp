@@ -11,24 +11,58 @@ Model::Model() {
     methaneTargeted = false;
     peridotTargeted = false;
     sulphurTargeted = false;
+
+    inventorySize = 100;
+}
+
+float Model::totalVolumnInventory(){
+    float total = 0;
+    for (auto key : itemMap.keys()) {
+        total += itemMap.value(key)->giveVolumn() * itemMap.value(key)->giveQuantity();
+    }
+
+
+
+    return total;
 }
 
 
 
 // Slots:
 void Model::addThisItem(ItemsClass* daItem){
-    if(itemMap.contains(daItem->giveID())){
-        itemMap.find(daItem->giveID()).value()->addItemQuantity(daItem);
 
+    // Is there room in the inventory to add this?
+    if((daItem->giveQuantity() * daItem->giveVolumn()) <= (inventorySize - totalVolumnInventory())){
 
-        emit updateInventoryDisplay(itemMap.value(daItem->giveID()));
+        // Is the item in the inventory already?
+        if(itemMap.contains(daItem->giveID())){
+            // Found: Add item to inventory
+            itemMap.value(daItem->giveID())->addItemQuantity(daItem);
 
-    } else {
-        itemMap.insert(daItem->giveID(), daItem);
-        emit updateInventoryDisplay(daItem);
+            // If the item quantity is 0 remove it from inventory, otherwise just add it
+            if(itemMap.find(daItem->giveID()).value()->giveQuantity() <= 0){
+                emit updateInventoryDisplay(itemMap.value(daItem->giveID()));
+                itemMap.remove(daItem->giveID());
+
+            } else {
+                emit updateInventoryDisplay(itemMap.value(daItem->giveID()));
+            }
+
+        } else {
+            // Not Found: As long as the item is positive, add it to inventory
+            if(daItem->giveQuantity() > 0){
+                itemMap.insert(daItem->giveID(), daItem);
+                emit updateInventoryDisplay(daItem);
+            }
+
+        }
+        // Update the progress bar!
+        float percentage = (totalVolumnInventory() / inventorySize) * 100;
+        emit updateInventoryFullness(percentage);
     }
 
 }
+
 
 
 

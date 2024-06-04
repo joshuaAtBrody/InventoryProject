@@ -23,6 +23,8 @@ private:
     // Key: item name, Value: itemSlot(stores png and name). Is used to tell invetoryWidget to display these ItemSlots
     QMap<ItemEnumClass, ItemsClass*> itemMap;
 
+    float inventorySize;
+
     bool bariumTargeted;
     bool ironTargeted;
     bool goldTargeted;
@@ -32,6 +34,8 @@ private:
     bool sulphurTargeted;
     bool methaneTargeted;
     bool bauxiteTargeted;
+
+    float totalVolumnInventory();
 
 
 
@@ -84,6 +88,8 @@ signals:
     /// \param daItem
     ///
     void removeDumped(ItemsClass *daItem);
+
+    void updateInventoryFullness(float percentage);
 
 
 

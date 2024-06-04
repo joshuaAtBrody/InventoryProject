@@ -28,7 +28,7 @@ void MainWindow::setUpConnections(){
 
 
     connect(model, &Model::updateInventoryDisplay, this, &MainWindow::replaceInventoryItem);
-
+    connect(model, &Model::updateInventoryFullness, this, &MainWindow::updateInventoryFullness);
 
     connect(model, &Model::addMined, model, &Model::addThisItem);
 
@@ -43,6 +43,10 @@ void MainWindow::setUpConnections(){
 
 void MainWindow::replaceInventoryItem(ItemsClass* itemToReplace){
     ui->invWig->setThisItemInView(itemToReplace);
+}
+
+void MainWindow::updateInventoryFullness(float percentage){
+    ui->invWig->updateInventoryFullness(percentage);
 }
 
 void MainWindow::on_mineButton_clicked()
